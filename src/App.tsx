@@ -54,15 +54,15 @@ function App() {
     }
   };
 
-  const handleSetDogBreed = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSetDogBreed = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDogBreed(e.target.value);
   };
 
-  const handleSetSubDogBreed = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSetSubDogBreed = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSubDogBreed(e.target.value);
   };
 
-  const handleSetNumberImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSetNumberImages = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setNumberImages(parseInt(e.target.value));
   };
 
