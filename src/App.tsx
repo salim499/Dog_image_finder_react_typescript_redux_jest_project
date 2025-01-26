@@ -3,19 +3,15 @@ import axios from "axios";
 // components
 import Header from "./components/header";
 import Dropdown from "./components/dropdown";
+import ImagesList from "./components/ImagesList";
+//types
+import {
+  DogBreedsResponse,
+  DogSubBreedsResponse,
+  DogImagesResponse,
+} from "./types";
 
-interface DogBreedsResponse {
-  message: Record<string, string[]>;
-}
-interface DogSubBreedsResponse {
-  message: string[];
-}
-
-interface DogImagesResponse {
-  message: string[];
-}
-
-function App() {
+const App = () => {
   // functions
   const getDogBreeds = async () => {
     try {
@@ -113,19 +109,11 @@ function App() {
             defaultText="Select images number"
             handleChange={handleSetNumberImages}
           />
-          {images.map((image, index) => (
-            <img
-              style={{ height: "350px", width: "70%" }}
-              key={index}
-              src={image}
-              className="rounded mx-auto d-block m-2"
-              alt="..."
-            ></img>
-          ))}
+          <ImagesList images={images} />
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default App;
