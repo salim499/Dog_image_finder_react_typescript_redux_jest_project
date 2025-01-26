@@ -3,11 +3,25 @@ import axios from "axios";
 // components
 import Header from "./components/header";
 import Dropdown from "./components/dropdown";
+
+interface DogBreedsResponse {
+  message: Record<string, string[]>;
+}
+interface DogSubBreedsResponse {
+  message: string[];
+}
+
+interface DogImagesResponse {
+  message: string[];
+}
+
 function App() {
   // functions
   const getDogBreeds = async () => {
     try {
-      const response = await axios.get("https://dog.ceo/api/breeds/list/all");
+      const response = await axios.get<DogBreedsResponse>(
+        "https://dog.ceo/api/breeds/list/all"
+      );
       setDogBreeds(response?.data?.message);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -16,7 +30,7 @@ function App() {
 
   const getDogSubBreeds = async (dogBreed: string) => {
     try {
-      const response = await axios.get(
+      const response = await axios.get<DogSubBreedsResponse>(
         `https://dog.ceo/api/breed/${dogBreed}/list`
       );
       setSubDogBreeds(response?.data?.message);
@@ -31,7 +45,7 @@ function App() {
     numberImages: number
   ) => {
     try {
-      const response = await axios.get(
+      const response = await axios.get<DogImagesResponse>(
         `https://dog.ceo/api/breed/${dogBreed}/${subDogBreed}/images/random/${numberImages}`
       );
       setImages(response?.data?.message);
@@ -41,7 +55,6 @@ function App() {
   };
 
   const handleSetDogBreed = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(React);
     setDogBreed(e.target.value);
   };
 
@@ -73,9 +86,7 @@ function App() {
   }, [dogBreed]);
 
   useEffect(() => {
-    if (!dogBreed) return;
-    if (!subDogBreed) return;
-    if (numberImages == 0) return;
+    if (!dogBreed || !subDogBreed || numberImages <= 0) return;
     getImages(dogBreed, subDogBreed, numberImages);
   }, [dogBreed, subDogBreed, numberImages]);
 
