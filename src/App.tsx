@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 // components
 import Header from "./components/header";
@@ -14,7 +14,7 @@ function App() {
     }
   };
 
-  const getDogSubBreeds = async (dogBreed) => {
+  const getDogSubBreeds = async (dogBreed: string) => {
     try {
       const response = await axios.get(
         `https://dog.ceo/api/breed/${dogBreed}/list`
@@ -25,7 +25,11 @@ function App() {
     }
   };
 
-  const getImages = async (dogBreed, subDogBreed, numberImages) => {
+  const getImages = async (
+    dogBreed: string,
+    subDogBreed: string,
+    numberImages: number
+  ) => {
     try {
       const response = await axios.get(
         `https://dog.ceo/api/breed/${dogBreed}/${subDogBreed}/images/random/${numberImages}`
@@ -36,25 +40,26 @@ function App() {
     }
   };
 
-  const handleSetDogBreed = (e: any) => {
+  const handleSetDogBreed = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(React);
     setDogBreed(e.target.value);
   };
 
-  const handleSetSubDogBreed = (e: any) => {
+  const handleSetSubDogBreed = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSubDogBreed(e.target.value);
   };
 
-  const handleSetNumberImages = (e: any) => {
-    setNumberImages(e.target.value);
+  const handleSetNumberImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNumberImages(parseInt(e.target.value));
   };
 
   // hooks
-  const [dogBreeds, setDogBreeds] = useState({});
-  const [subDogBreeds, setSubDogBreeds] = useState([]);
-  const [images, setImages] = useState([]);
-  const [numberImages, setNumberImages] = useState(0);
-  const [dogBreed, setDogBreed] = useState(null);
-  const [subDogBreed, setSubDogBreed] = useState(null);
+  const [dogBreeds, setDogBreeds] = useState<Record<string, string[]>>({});
+  const [subDogBreeds, setSubDogBreeds] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>([]);
+  const [numberImages, setNumberImages] = useState<number>(0);
+  const [dogBreed, setDogBreed] = useState<string | null>(null);
+  const [subDogBreed, setSubDogBreed] = useState<string | null>(null);
 
   useEffect(() => {
     getDogBreeds();
@@ -99,7 +104,7 @@ function App() {
           />
           {images.map((image, index) => (
             <img
-              style={{ height: "300px", width: "400px" }}
+              style={{ height: "350px", width: "70%" }}
               key={index}
               src={image}
               className="rounded mx-auto d-block m-2"
