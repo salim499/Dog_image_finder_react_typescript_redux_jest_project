@@ -4,18 +4,21 @@ import axios from "axios";
 import Header from "./components/header";
 import Dropdown from "./components/dropdown";
 import ImagesList from "./components/ImagesList";
-//types
+// types
 import {
-  DogBreedsResponse,
-  DogSubBreedsResponse,
-  DogImagesResponse,
+  DogBreedsType,
+  SubDogBreedsType,
+  DogImagesType,
+  DogBreedType,
+  SubDogBreedType,
+  DogNumberImagesType,
 } from "./types";
 
 const App = () => {
   // functions
   const getDogBreeds = async () => {
     try {
-      const response = await axios.get<DogBreedsResponse>(
+      const response = await axios.get<{ message: DogBreedsType }>(
         "https://dog.ceo/api/breeds/list/all"
       );
       setDogBreeds(response?.data?.message);
@@ -26,7 +29,7 @@ const App = () => {
 
   const getDogSubBreeds = async (dogBreed: string) => {
     try {
-      const response = await axios.get<DogSubBreedsResponse>(
+      const response = await axios.get<{ message: SubDogBreedsType }>(
         `https://dog.ceo/api/breed/${dogBreed}/list`
       );
       setSubDogBreeds(response?.data?.message);
@@ -41,7 +44,7 @@ const App = () => {
     numberImages: number
   ) => {
     try {
-      const response = await axios.get<DogImagesResponse>(
+      const response = await axios.get<{ message: DogImagesType }>(
         `https://dog.ceo/api/breed/${dogBreed}/${subDogBreed}/images/random/${numberImages}`
       );
       setImages(response?.data?.message);
@@ -63,12 +66,12 @@ const App = () => {
   };
 
   // hooks
-  const [dogBreeds, setDogBreeds] = useState<Record<string, string[]>>({});
-  const [subDogBreeds, setSubDogBreeds] = useState<string[]>([]);
-  const [images, setImages] = useState<string[]>([]);
-  const [numberImages, setNumberImages] = useState<number>(0);
-  const [dogBreed, setDogBreed] = useState<string | null>(null);
-  const [subDogBreed, setSubDogBreed] = useState<string | null>(null);
+  const [dogBreeds, setDogBreeds] = useState<DogBreedsType>({});
+  const [subDogBreeds, setSubDogBreeds] = useState<SubDogBreedsType>([]);
+  const [images, setImages] = useState<DogImagesType>([]);
+  const [numberImages, setNumberImages] = useState<DogNumberImagesType>(0);
+  const [dogBreed, setDogBreed] = useState<DogBreedType>(null);
+  const [subDogBreed, setSubDogBreed] = useState<SubDogBreedType>(null);
 
   useEffect(() => {
     getDogBreeds();
@@ -90,7 +93,7 @@ const App = () => {
     <div className="container" style={{ height: "100vh" }}>
       <Header />
       <div className="d-flex justify-content-center mt-5">
-        <form className="d-flex flex-column align-items-center bg-secondary-subtle w-75 p-3">
+        <form className="d-flex flex-column align-items-center bg-dark w-75 p-3">
           <Dropdown
             items={Object.keys(dogBreeds)}
             selectedItem={dogBreed}

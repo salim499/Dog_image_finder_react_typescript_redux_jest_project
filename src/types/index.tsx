@@ -1,14 +1,16 @@
-export interface DogBreedsResponse {
-  message: Record<string, string[]>;
-}
-export interface DogSubBreedsResponse {
-  message: string[];
-}
+export type DogBreedsType = Record<string, string[]>;
 
-export interface DogImagesResponse {
-  message: string[];
-}
+export type SubDogBreedsType = string[];
 
-export interface DogImages {
-  images: string[];
-}
+export type DogImagesType = string[];
+
+export type DogBreedType = string | null;
+
+export type SubDogBreedType = string | null;
+
+export type DogNumberImagesType = number;
+
+export type actionType = {
+  type: string;
+  payload: Record<string, string[]> | string[] | number;
+};

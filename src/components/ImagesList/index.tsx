@@ -1,8 +1,12 @@
 import React from "react";
 // types
-import { DogImages } from "../../types/index";
+import { DogImagesType } from "../../types/index";
 
-const Index: React.FC<DogImages> = ({ images }) => {
+interface Props {
+  images: DogImagesType;
+}
+
+const Index: React.FC<Props> = ({ images }) => {
   return images.map((image, index) => (
     <img
       style={{ height: "350px", width: "70%" }}
